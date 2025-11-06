@@ -1,0 +1,41 @@
+>> % UTS no 3
+>> % Definisikan pembilang dan penyebut terlebih dahulu
+>> num = [1 2 3];       % s^2 + 2s + 3
+>> den = [1 4 5 2];     % s^3 + 4s^2 + 5s + 2
+>> % mencari residu, pole, dan hasil bagi menggunakan command residue()
+>> [R, P, K] = residue(num, den);
+>> disp('Residu:')
+Residu:
+>> disp(R)
+    3.0000
+   -2.0000
+    2.0000
+
+>> disp('Pole:')
+Pole:
+>> disp(P)
+   -2.0000
+   -1.0000
+   -1.0000
+
+>> disp('Hasil bagi:')
+Hasil bagi:
+>> disp(K)
+>> % menampilkan Kembali fungsi rasional berdasarkan hasil dekomposisi
+>> syms s
+>> partial_sum = sum(R ./ (s - P));   % Pecahan parsial
+>> direct_term = poly2sym(K, s);     % Hasil bagi (jika ada)
+>> T_reconstructed = partial_sum + direct_term;
+>> disp('Fungsi rasional hasil dekomposisi:')
+Fungsi rasional hasil dekomposisi:
+>> pretty(T_reconstructed)
+  3
+-----
+s + 2
+
+>> % memvisualisasi posisi pole dan zero
+>> sys = tf(num, den);     % Sistem transfer
+>> figure;
+>> pzmap(sys);
+>> title('Peta Pole-Zero dari T(s)');
+>> grid on;
