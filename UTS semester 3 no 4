@@ -1,0 +1,46 @@
+>> % UTS no 4
+>> % Penyusunan Fungsi Transfer dan Analisis Kestabilan
+>> % % 1. Definisikan pembilang dan penyebut
+>> num = [2 3 1];       % 2s^2 + 3s + 1
+>> den = [1 5 6 2];     % s^3 + 5s^2 + 6s + 2
+>> G = tf(num, den); % Buat fungsi transfer
+>> G_zpk = zpk(G);   % Konversi ke bentuk Zero-Pole-Gain
+>> disp('Fungsi Transfer dalam bentuk ZPK:')
+Fungsi Transfer dalam bentuk ZPK:
+>> disp(G_zpk)
+  zpk with properties:
+
+                Z: {[2×1 double]}
+                P: {[3×1 double]}
+                K: 2
+    DisplayFormat: 'roots'
+         Variable: 's'
+          IODelay: 0
+       InputDelay: 0
+      OutputDelay: 0
+        InputName: {''}
+        InputUnit: {''}
+       InputGroup: [1×1 struct]
+       OutputName: {''}
+       OutputUnit: {''}
+      OutputGroup: [1×1 struct]
+            Notes: [0×1 string]
+         UserData: []
+             Name: ''
+               Ts: 0
+         TimeUnit: 'seconds'
+     SamplingGrid: [1×1 struct]
+
+>> % Membentuk Visualisasi posisi pole dan zero
+>> figure;
+>> pzmap(G);
+>> title('Peta Pole-Zero dari G(s)');
+>> grid on;
+>> % Interpretasi kestabilan
+>> poles = pole(G);
+>> disp('Posisi Pole:')
+Posisi Pole:
+>> disp(poles)
+   -3.4142
+   -1.0000
+   -0.5858
