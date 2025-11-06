@@ -1,0 +1,29 @@
+>> % UTS no 5
+>> % Modul 4: Koneksi Diagram Blok Seri
+>> % Definisikan masing-masing fungsi transfer
+>> G1 = tf([1 1], [1 3]);                    % G1(s) = (s + 1)/(s + 3)
+>> G2 = tf(1, [100 10 1]);                   % G2(s) = 1/(100s^2 + 10s + 1)
+>> % Bentuk sistem loop terbuka secara seri
+>> G_total = series(G1, G2);                % Bisa juga pakai G1 * G2
+>> disp('Fungsi transfer total G(s):')
+Fungsi transfer total G(s):
+>> G_total
+
+G_total =
+ 
+             s + 1
+  ----------------------------
+  100 s^3 + 310 s^2 + 31 s + 3
+ 
+Continuous-time transfer function.
+Model Properties
+>> % Membentuk Plot respons step dari sistem total
+>> figure;
+>> step(G_total);
+>> title('Respons Step dari Sistem Seri G1(s) * G2(s)');
+>> xlabel('Waktu (s)');
+>> ylabel('Amplitudo');
+>> grid on;
+>> % series(G1, G2) atau G1 * G2 menghasilkan fungsi transfer total dari koneksi seri.
+
+>> % step(G_total) menunjukkan bagaimana sistem merespons terhadap input tangga (step input).
