@@ -1,0 +1,29 @@
+>> % UTS no 2
+>> syms t
+>> q_sym = 3*t^4 - 2*t^2 + 5*t - 7;
+>> q_vec = sym2poly(q_sym); % mengkonver ke bentuk vektor koefisien
+>> disp('Vektor koefisien dari q(t):')
+Vektor koefisien dari q(t):
+>> disp(q_vec)
+     3     0    -2     5    -7
+
+>> % Konversi kembali ke bentuk simbolik
+>> q_reconstructed = poly2sym(q_vec, t);
+>> disp('Polinomial hasil rekonstruksi:')
+Polinomial hasil rekonstruksi:
+>> disp(q_reconstructed)
+3*t^4 - 2*t^2 + 5*t - 7
+ 
+>> % Verifikasi dengan membandingkan grafik
+>> x = linspace(-10, 10, 1000);
+>> y_original = double(subs(q_sym, t, x));
+>> y_reconstructed = polyval(q_vec, x);
+>> figure;
+>> plot(x, y_original, 'b', 'LineWidth', 2); hold on;
+>> plot(x, y_reconstructed, 'r--', 'LineWidth', 2);
+>> grid on;
+>> xlabel('t');
+>> ylabel('q(t)');
+>> title('Perbandingan Grafik Polinomial Asli dan Rekonstruksi');
+>> legend('q(t) asli', 'q(t) hasil poly2sym', 'Location', 'best');
+>> 
