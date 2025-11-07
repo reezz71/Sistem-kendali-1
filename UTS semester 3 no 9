@@ -1,0 +1,49 @@
+>> % UTS no 9
+>> % Definisikan koefisien numerator dan denominator
+>> num = [1 2];      % s + 2
+>> den = [1 4 3];    % s^2 + 4s + 3
+>> % mengkonversi langsung ke bentuk state-space
+>> [A, B, C, D] = tf2ss(num, den);
+>> % Menampilkan matriks-matriks state-space
+>> disp('Matriks A:'); A
+Matriks A:
+
+A =
+
+    -4    -3
+     1     0
+
+>> disp('Matriks B:'); B
+Matriks B:
+
+B =
+
+     1
+     0
+
+>> disp('Matriks C:'); C
+Matriks C:
+
+C =
+
+     1     2
+
+>> disp('Matriks D:'); D
+Matriks D:
+
+D =
+
+     0
+
+>> % Membuat Verifikasi dengan objek fungsi transfer dan konversi ke ss
+>> s = tf('s');
+>> G = (s + 2)/(s^2 + 4*s + 3);
+>> sys_ss = ss(G);
+>> % Bandingkan respons untuk memastikan ekivalensi
+>> figure; step(G); hold on; step(sys_ss); grid on;
+>> title('Verifikasi respons langkah: tf vs state-space');
+>> legend('tf','state-space');
+>> % Matriks A, Menggambarkan hubungan antar state dan menentukan pole sistem karena pole adalah eigenvalue dari A
+>> % Matriks B, Menentukan bagaimana sinyal masukan u(t) memengaruhi perubahan state
+>> % Matriks C,Menggabungkan state menjadi keluaran y(t)
+>> % Matriks D, Menggambarkan komponen keluaran yang langsung berasal dari input tanpa melalui dinamika state
