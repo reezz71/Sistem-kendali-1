@@ -1,0 +1,42 @@
+>> % UTS no 8
+>> % Definisikan operator Laplace
+>> s = tf('s');
+>> % Modifikasi G1 dengan gain K = 10
+>> G1_mod = 10*(s + 4)/(s^2 + 3*s + 2);
+>> G2 = 1/(s + 1);
+>> % Membentuk sistem loop tertutup negatif
+>> T_mod = feedback(G1_mod, G2);  % default adalah feedback negatif
+>> % Menampilkan fungsi transfer tertutup
+>> disp('Fungsi transfer tertutup dengan gain K=10:');
+Fungsi transfer tertutup dengan gain K=10:
+>> T_mod
+
+T_mod =
+ 
+    10 s^2 + 50 s + 40
+  -----------------------
+  s^3 + 4 s^2 + 15 s + 42
+ 
+Continuous-time transfer function.
+Model Properties
+>> % Menganalisis pole dan zero
+>> disp('Pole T_mod(s):'); pole(T_mod)
+Pole T_mod(s):
+
+ans =
+
+  -0.3471 + 3.5475i
+  -0.3471 - 3.5475i
+  -3.3058 + 0.0000i
+
+>> disp('Zero T_mod(s):'); zero(T_mod)
+Zero T_mod(s):
+
+ans =
+
+    -4
+    -1
+
+>> % Memvisualisasi: Bode dan step response
+>> figure; bode(T_mod); grid on; title('Bode T_{mod}(s)');
+>> figure; step(T_mod); grid on; title('Step response T_{mod}(s)');
