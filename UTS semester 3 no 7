@@ -1,0 +1,46 @@
+>> % UTS no 7
+>> % Mendefinisikan operator s
+>> s = tf('s');
+>> % Mendefinisikan sistem utama (plant) dan sistem umpan balik (feedback).
+>> G1 = (s + 4)/(s^2 + 3*s + 2);
+
+>> G2 = 1/(s + 1);
+>> % Membentuk Loop tertutup negatif: T = G1 / (1 + G1*G2)
+>> T = feedback(G1, G2);   % default feedback() adalah negatif
+>> % Menampilkan fungsi transfer tertutup
+>> disp('Fungsi transfer tertutup T(s):');
+Fungsi transfer tertutup T(s):
+>> T
+
+T =
+ 
+      s^2 + 5 s + 4
+  ---------------------
+  s^3 + 4 s^2 + 6 s + 6
+ 
+Continuous-time transfer function.
+Model Properties
+>> 
+>> % Menganalisis pole dan zero
+>> disp('Pole T(s):'); pole(T) % Menampilkan posisi pole dari T(s)
+Pole T(s):
+
+ans =
+
+  -2.5747 + 0.0000i
+  -0.7126 + 1.3500i
+  -0.7126 - 1.3500i
+
+>> disp('Zero T(s):'); zero(T) % Menampilkan posisi zero dari T(s)
+
+Zero T(s):
+
+ans =
+
+    -4
+    -1
+
+>> % Membentuk Visualisasi: Bode dan step
+
+>> figure; bode(T); grid on; title('Bode T(s)'); % bode(T): menampilkan grafik magnitudo dan fase terhadap frekuensi
+>> figure; step(T); grid on; title('Step response T(s)'); % step(T): menunjukkan bagaimana sistem merespons input berupa sinyal langkah
