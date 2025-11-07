@@ -1,0 +1,26 @@
+>> % Definisikan matriks state-space
+>> A = [0 -4; 1 -3];
+>> B = [0; 1];
+>> C = [1 0];
+>> D = 0;
+>> % Buat model state-space
+>> sys_ss = ss(A, B, C, D); % ss() membentuk model dinamik berdasarkan matriks A, B, C, D
+>> % Konversi ke fungsi transfer
+>> sys_tf = tf(sys_ss); % tf() mengubah representasi state-space menjadi bentuk fungsi transfer G(s)
+>> disp('Fungsi transfer hasil konversi dari state-space:');
+Fungsi transfer hasil konversi dari state-space:
+>> sys_tf
+
+sys_tf =
+ 
+       -4
+  -------------
+  s^2 + 3 s + 4
+ 
+Continuous-time transfer function.
+Model Properties
+>> % Verifikasi dengan respons langkah
+>> figure;
+>> step(sys_tf);
+>> title('Respons Langkah dari Fungsi Transfer Hasil Konversi');
+>> grid on;
