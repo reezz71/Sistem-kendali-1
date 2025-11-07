@@ -1,0 +1,30 @@
+>> % Mendefinisikan fungsi transfer G1 dan G2
+>> s = tf('s');
+>> G1 = (s + 1)/(s^2 + 3*s);
+>> G2 = s/(s^2 + 2*s + 5);
+>> 
+>> G_total = G1 + G2;
+>> % Menampilkan fungsi transfer total
+>> disp('Fungsi Transfer Total:');
+Fungsi Transfer Total:
+>> G_total
+
+G_total =
+ 
+    2 s^3 + 6 s^2 + 7 s + 5
+  ---------------------------
+  s^4 + 5 s^3 + 11 s^2 + 15 s
+ 
+Continuous-time transfer function.
+Model Properties
+>> % Menampilkan Plot grafik Bode
+>> figure;
+>> bode(G_total);
+>> title('Grafik Bode dari G_{total}(s)');
+>> grid on;
+>> % Menampilkan plot impuls
+>> figure;
+>> impulse(G_total);
+>> title('Respons Impuls dari G_{total}(s)');
+>> grid on;
+>> 
