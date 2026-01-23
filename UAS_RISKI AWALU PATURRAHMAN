@@ -1,0 +1,319 @@
+>> % UAS SISTEM KENDALI
+>> % 1. a Diferentiation of polynomial
+>> syms x
+>> y = x^3+2*x^2-x+3;
+>> dy = diff(y,x)
+ 
+dy =
+ 
+3*x^2 + 4*x - 1
+ 
+>> disp('turunan dy/dx=')
+turunan dy/dx=
+>> disp(dy)
+3*x^2 + 4*x - 1
+ 
+>> % 1. b polyder
+>> a = [3 6 9];
+>> b = [1 2 0];
+>> dp 1 = polyder(a,b)
+Unrecognized function or variable 'dp'.
+ 
+>> dp1 = polyder(a,b)
+
+dp1 =
+
+    12    36    42    18
+
+>> disp('Turunan dengan polyder=')
+Turunan dengan polyder=
+>> disp(dp1)
+    12    36    42    18
+
+>> % 2. Integral
+>> syms x
+>> y = x^3+2*x^2-x+3;
+>> Iy = int(y,x)
+ 
+Iy =
+ 
+x^4/4 + (2*x^3)/3 - x^2/2 + 3*x
+ 
+>> disp('Integral terhadap y,x =')
+Integral terhadap y,x =
+>> disp(Iy)
+x^4/4 + (2*x^3)/3 - x^2/2 + 3*x
+ 
+>> % 3. Transfer fungsi
+>> K = 2;
+>> T = 3;
+>> num = [K];
+>> den = [T 1];
+>> H = tf(num,den)
+
+H =
+ 
+     2
+  -------
+  3 s + 1
+ 
+Continuous-time transfer function.
+Model Properties
+>> % 4. Time response
+>> num = [1 1];
+>> den = [1 -1 3];
+>> H = tf(num,den);
+>> t = 0:0.01:10;
+>> step(H,t)
+>> grid on
+>> title('Step Response H(s)= (s+1)/(s^2-s+3)')
+>> % 5. Integrator System
+>> K = 1;
+>> num = K;
+>> den = [1 0];
+>> H = tf(num,den);
+>> pole(H)
+
+ans =
+
+     0
+
+>> K_values = [0.2 1 5];
+>> for i = 1:length(K_values)
+K = K_values(i);
+H = tf(K, [1 0]);
+step(H)
+hold on
+end
+>> grid on
+>> legend('K=0.2','K=1','K=5')
+>> title('Step Response Integrator')
+>> % 6. A 1. Order system
+>> K = 1;
+>> T = 1;
+>> H = tf(K, [T 1]);
+>> pole(H)
+
+ans =
+
+    -1
+
+>> K_values = [0.5 1 2];
+>> T = 1;
+>> for i = 1:length(K_values)
+K = K_values(i);
+H = tf(K, [T 1]);
+step(H)
+hold on
+end
+>> grid on
+>> legend('K=0.5','K=1','K=2')
+>> title('Step Response - Variasi K')
+>> T_values = [0.2 0.5 1 2 4];
+>> K = 1;
+>> for i = 1:length(T_values)
+T = T_values(i);
+H = tf(K, [T 1]);
+step(H)
+hold on
+end
+>> grid on
+>> legend('T=0.2','T=0.5','T=1','T=2','T=4')
+>> title('Step Response Variasi - T')
+>> % 7. State Space Model
+>> A = [0 1;-1 -3];
+>> B = [0 0;2 4];
+>> C = [5 6];
+>> D = [7 0];
+>> sys = ss(A,B,C,D)
+
+sys =
+ 
+  A = 
+       x1  x2
+   x1   0   1
+   x2  -1  -3
+ 
+  B = 
+       u1  u2
+   x1   0   0
+   x2   2   4
+ 
+  C = 
+       x1  x2
+   y1   5   6
+ 
+  D = 
+       u1  u2
+   y1   7   0
+ 
+Continuous-time state-space model.
+Model Properties
+>> t = 0:0.01:10;
+>> figure
+>> step(sys,t)
+>> grid on
+>> title('Step Response State-Space Model')
+>> G = tf(sys)
+
+G =
+ 
+  From input 1 to output:
+  7 s^2 + 33 s + 17
+  -----------------
+    s^2 + 3 s + 1
+ 
+  From input 2 to output:
+    24 s + 20
+  -------------
+  s^2 + 3 s + 1
+ 
+Continuous-time transfer function.
+Model Properties
+>> % 8. State-Space Model: Pendulum
+>> g = 9.81;
+>> m = 8;
+>> r = 5;
+>> b = 10;
+>> A = [0 1;-g/r -b/(m*r^2)];
+>> B = [0; 1];
+>> C = eye(2);
+>> D = [0; 0];
+>> sys_pend = ss(A,B,C,D)
+
+sys_pend =
+ 
+  A = 
+           x1      x2
+   x1       0       1
+   x2  -1.962   -0.05
+ 
+  B = 
+       u1
+   x1   0
+   x2   1
+ 
+  C = 
+       x1  x2
+   y1   1   0
+   y2   0   1
+ 
+  D = 
+       u1
+   y1   0
+   y2   0
+ 
+Continuous-time state-space model.
+Model Properties
+>> t = 0:0.01:10;
+>> u = ones(size(t));
+>> x0 = [0.1;0]; % sudut awal kecil
+>> [y,t,x] = Isim(sys_pend,u,t,x0);
+Unrecognized function or variable 'Isim'.
+ 
+Did you mean:
+>> [y,t,x] = sim(sys_pend,u,t,x0);
+'model' parameter must be a character vector, string or handle
+ 
+>> [y,t,x] = 1sim(sys_pend,u,t,x0);
+ [y,t,x] = 1sim(sys_pend,u,t,x0);
+            ↑
+Invalid expression. Check for missing multiplication operator, missing
+or unbalanced delimiters, or other syntax error. To construct matrices,
+use brackets instead of parentheses.
+ 
+Did you mean:
+>> [y,t,x] = lsim(sys_pend,u,t,x0);
+>> plot(t,x(:,1),'LineWidth',2)
+>> grid on
+>> hold on
+>> plot(t,x(:,2),'--','LineWidth',2)
+>> xlabel('Waktu(detik)')
+>> ylabel('State')
+>> legend('x1(sudut)','x2(kecepatan)')
+>> title('Respon Pendulum')
+>> % 9. Discretization
+>> k = 10;
+>> c = 2;
+>> m = 1;
+>> A = [0 1;-k/m -c/m];
+>> B = [0;1/m];
+>> C = [1 0];
+>> D = 0;
+>> sys_c = ss(A,B,C,D);
+>> Ts = 0.1; % waktu sampling
+>> sys_d = c2d(sys_c,Ts,'zoh')
+
+sys_d =
+ 
+  A = 
+            x1       x2
+   x1   0.9536  0.08913
+   x2  -0.8913   0.7753
+ 
+  B = 
+             u1
+   x1  0.004644
+   x2   0.08913
+ 
+  C = 
+       x1  x2
+   y1   1   0
+ 
+  D = 
+       u1
+   y1   0
+ 
+Sample time: 0.1 seconds
+Discrete-time state-space model.
+Model Properties
+>> % 10. Mass spring damper system
+>> c = 1;
+>> m = 1;
+>> k = 50;
+>> A = [0 1;-k/m -c/m];
+>> B = [0;1/m];
+>> C = [1 0];
+>> D = 0;
+>> sys_msd = ss(A,B,C,D)
+
+sys_msd =
+ 
+  A = 
+        x1   x2
+   x1    0    1
+   x2  -50   -1
+ 
+  B = 
+       u1
+   x1   0
+   x2   1
+ 
+  C = 
+       x1  x2
+   y1   1   0
+ 
+  D = 
+       u1
+   y1   0
+ 
+Continuous-time state-space model.
+Model Properties
+>> t = 0:0.001:5;
+>> figure
+>> step(sys_msd,t)
+>> grid on
+>> xlabel('Waktu(detik)')
+>> ylabel('Posisi x(t)')
+>> title('Step Response masa peredam pegas')
+>> G_msd = tf(sys_msd)
+
+G_msd =
+ 
+       1
+  ------------
+  s^2 + s + 50
+ 
+Continuous-time transfer function.
+Model Properties
+>> 
